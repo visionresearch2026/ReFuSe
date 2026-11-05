@@ -1,0 +1,12 @@
+__pycache__/
+*.pyc
+# local machine paths and outputs
+configs/local/
+work_dirs/
+work_dirs_unified/
+data/
+checkpoints/
+third_party/
+*.pth
+*.pt
+*.npz

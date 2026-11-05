@@ -1,0 +1,15 @@
+# ReFuSe: SYNTHIA -> Cityscapes, DeepLabV2-ResNet101, CorrCLIP
+source: synthia
+backbone: deeplabv2
+source_ckpt: checkpoints/sourcemodel_synthia_res.pth
+data:
+  cityscapes_root: data/Cityscapes
+  ps_root: data/pseudo_labels/synthia_deeplabv2/train   # generate_pseudolabels.py
+  sam2_root: data/sam2_masks/train   # <city>/<stem>_leftImg8bit.npz
+vlm:
+  name: corrclip
+  # pre-extracted CorrCLIP outputs per training image (see README, Data preparation)
+  seg_root: data/corrclip/segmentation/train   # <city>/<stem>_leftImg8bit.png
+  feat_root: data/corrclip/features/train      # <city>/<stem>_leftImg8bit.pt (512,h,w)
+  text_embed: data/corrclip/cityscapes_clip_text_embeddings.pt   # {'embeddings': (19,512)}
+work_dir: work_dirs/synthia_deeplabv2_corrclip

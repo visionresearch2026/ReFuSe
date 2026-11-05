@@ -1,0 +1,8 @@
+# DeepLabV2 experiments. MiT-B5 additionally needs the DAFormer/HRDA environment
+# (torch 1.10, mmcv-full 1.4.0); ProxyCLIP needs the ProxyCLIP repository's requirements.
+torch>=1.10
+numpy
+opencv-python
+tqdm
+pyyaml
+tensorboard
