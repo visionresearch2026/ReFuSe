@@ -1,0 +1,7 @@
+{
+  "seed": 0,
+  "n_train": 9000,
+  "n_val": 400,
+  "n_total_images": 9400,
+  "root": "data/Synthia/RAND_CITYSCAPES"
+}

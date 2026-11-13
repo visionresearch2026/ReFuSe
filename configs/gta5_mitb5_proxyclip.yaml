@@ -1,0 +1,18 @@
+# ReFuSe: GTA5 -> Cityscapes, MiT-B5 + DAFormer head, ProxyCLIP
+source: gta5
+backbone: mitb5
+source_ckpt: checkpoints/gta5_mitb5_source_only.pth
+source_config: source_models/gta5_mitb5_source_only.py
+mmseg_root: third_party/DAFormer      # DAFormer/HRDA repository (its own mmseg)
+data:
+  cityscapes_root: data/Cityscapes
+  ps_root: data/pseudo_labels/gta5_mitb5/train   # generate_pseudolabels.py
+  sam2_root: data/sam2_masks/train   # <city>/<stem>_leftImg8bit.npz
+vlm:
+  name: proxyclip            # run on the fly
+  proxyclip_root: third_party/ProxyCLIP   # official ProxyCLIP repository
+  clip_path: ViT-B/16
+  slide_stride: 112
+  slide_crop: 224
+  # name_path: <ProxyCLIP>/configs/cls_city_scapes.txt (default)
+work_dir: work_dirs/gta5_mitb5_proxyclip

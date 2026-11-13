@@ -1,0 +1,16 @@
+# ReFuSe: GTA5 -> Cityscapes, DeepLabV2-ResNet101, ProxyCLIP
+source: gta5
+backbone: deeplabv2
+source_ckpt: checkpoints/GTA5_source.pth
+data:
+  cityscapes_root: data/Cityscapes
+  ps_root: data/pseudo_labels/gta5_deeplabv2/train   # generate_pseudolabels.py
+  sam2_root: data/sam2_masks/train   # <city>/<stem>_leftImg8bit.npz
+vlm:
+  name: proxyclip            # run on the fly
+  proxyclip_root: third_party/ProxyCLIP   # official ProxyCLIP repository
+  clip_path: ViT-B/16
+  slide_stride: 112
+  slide_crop: 224
+  # name_path: <ProxyCLIP>/configs/cls_city_scapes.txt (default)
+work_dir: work_dirs/gta5_deeplabv2_proxyclip

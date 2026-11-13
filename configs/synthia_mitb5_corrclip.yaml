@@ -1,0 +1,17 @@
+# ReFuSe: SYNTHIA -> Cityscapes, MiT-B5 + DAFormer head, CorrCLIP
+source: synthia
+backbone: mitb5
+source_ckpt: checkpoints/sourcemodel_synthia_mitb5.pth
+source_config: source_models/synthia_mitb5_source_only.py
+mmseg_root: third_party/DAFormer      # DAFormer/HRDA repository (its own mmseg)
+data:
+  cityscapes_root: data/Cityscapes
+  ps_root: data/pseudo_labels/synthia_mitb5/train   # generate_pseudolabels.py
+  sam2_root: data/sam2_masks/train   # <city>/<stem>_leftImg8bit.npz
+vlm:
+  name: corrclip
+  # pre-extracted CorrCLIP outputs per training image (see README, Data preparation)
+  seg_root: data/corrclip/segmentation/train   # <city>/<stem>_leftImg8bit.png
+  feat_root: data/corrclip/features/train      # <city>/<stem>_leftImg8bit.pt (512,h,w)
+  text_embed: data/corrclip/cityscapes_clip_text_embeddings.pt   # {'embeddings': (19,512)}
+work_dir: work_dirs/synthia_mitb5_corrclip
