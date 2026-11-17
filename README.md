@@ -31,8 +31,8 @@ CorrCLIP as the VLM; source-only → Stage 1 → Stage 2.
 
 | | DeepLabV2-ResNet101 | MiT-B5 |
 |---|---|---|
-| GTA5 → Cityscapes, mIoU | 36.9 → **52.6** | 45.4 → **55.3** |
-| SYNTHIA → Cityscapes, mIoU16 | 35.2 → **61.5** | 45.0 → **63.02** |
+| GTA5 → Cityscapes, mIoU | 36.9 → 52.6 | 45.4 → 55.3 |
+| SYNTHIA → Cityscapes, mIoU16 | 35.2 → 61.5 | 45.0 → 63.02 |
 
 SYNTHIA: DeepLabV2 numbers use the 16-class-head protocol, MiT-B5 numbers the DAFormer
 protocol (see `evaluate.py`).
