@@ -1,22 +1,21 @@
-# ReFuSe: Region-level Fusion of a Source model and a VLM for source-free domain adaptive segmentation
+# ReFuSe: Foundation-Model-Guided Source-Free Unsupervised Domain Adaptation for Semantic Segmentation via Region-Level Reliability Fusion
 
-ReFuSe adapts a segmentation model trained on a synthetic source domain (GTA5 or SYNTHIA) to
-Cityscapes **without source data and without target labels**. It fuses two teachers inside
-SAM2 regions: the source model and an open-vocabulary vision-language model (CorrCLIP or
-ProxyCLIP). At test time only the adapted segmentation network is used.
+ReFuSe adapts a segmentation model from a synthetic source domain (GTA5 or SYNTHIA) to
+Cityscapes **without source data or target labels**. It combines predictions from the
+source model and a CLIP-based segmenter (CorrCLIP or ProxyCLIP) within SAM2 regions. 
+Only the adapted segmentation model is used at inference.
 
-- **Stage 1** (`train_stage1.py`): a region-level agreement / reliability rule decides, for every
-  SAM2 region, between a hard label (both teachers agree), a soft label from the more reliable
-  teacher, or no supervision. It adds class-balanced CE, text z-score verification of rare
-  labels (partial labels), and a rule for classes the VLM cannot name.
-- **Stage 2** (`train_stage2.py`): refinement with the frozen Stage 1 model as reference and a dual
-  prototype bank (target features and VLM features) that resolves disagreements; losses
-  `L_compress` and `L_consist`.
-- **Model selection without target labels**: 200 held-out training images. Stage 1 keeps the lowest
-  disagreement rate with the VLM; Stage 2 keeps the highest mIoU against the consensus
-  pseudo-label (source pseudo-label where it equals the VLM label).
+- **Stage 1** (`train_stage1.py`): Uses region-level agreement and reliability to assign
+  hard labels, soft labels from the more reliable teacher, or no supervision.
+  It also includes class-balanced learning and rare-class label verification.  
+- **Stage 2** (`train_stage2.py`): Refines the adapted model using a dual prototype bank containing target-model and VLM features to resolve remaining disagreements.
+- **Model selection without target labels**: Uses 200 held-out training images without target labels.
+  Stage 1 selects the checkpoint with the lowest disagreement with the VLM, while
+  Stage 2 selects the checkpoint with the highest agreement with consensus pseudo-labels.
 
-One script per stage covers every setting. The experiment config picks the setting:
+A single training script is provided for each stage, with experiment configurations used to select the dataset, backbone and VLM.
+
+
 
 | config | source | backbone | VLM |
 |---|---|---|---|
